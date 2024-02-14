@@ -4,15 +4,16 @@ import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.161.0/
 const scene = new THREE.Scene();
 
 // object creation
-
+/* 
 // 1. cube geometry
-const geometry = new THREE.BoxGeometry(
+const geometry = new THREE.BufferGeometry(
     1,1,1
 );
 
 // 2. material for the cube
 const material = new THREE.MeshBasicMaterial({ 
-    color: 0xff0000
+    color: 0xff0000,
+    wireframe: true
 });
 
 // 3. cube
@@ -20,15 +21,19 @@ const mesh = new THREE.Mesh(geometry, material);
 
 
 // another mesh
-const newGeometry  = new THREE.BoxGeometry(
+const newGeometry  = new THREE.BoxBufferGeometry(
     1,1,1
 );
 
 const newMaterial = new THREE.MeshBasicMaterial({
     color: "violet",
+    wireframe: true
 });
 
 const newMesh = new THREE.Mesh(newGeometry, newMaterial);
+
+// tranagle
+
 
 // creating the group
 const Group = new THREE.Group();
@@ -38,6 +43,34 @@ Group.add(mesh, newMesh);
 
 // adding the cube to the scene
 scene.add(Group);
+
+*/
+
+// 1. Geometry
+const geometry = new THREE.BufferGeometry();
+
+// vertices
+const verticesArray = new Float32Array([
+    0,0,0,
+    0,1,0,
+    1,0,0
+]);
+
+const positionsAttribute = new THREE.BufferAttribute(verticesArray, 3);
+geometry.setAttribute('positions', positionsAttribute);
+console.log(geometry);
+
+// materials
+const material = new THREE.MeshBasicMaterial({
+    color: "#a7beb4",
+    wireframe: true
+})
+
+// 3. Mesh
+const mesh = new THREE.Mesh(geometry, material);
+
+// adding the mesh to the scene
+scene.add(mesh);
 
 // Helper function
 // const AxesHelper = new THREE.AxesHelper(2);
@@ -111,6 +144,6 @@ const animate = () =>{
     requestAnimationFrame(animate);
 }
 
-animate();
+renderer.render(scene, camera);
 
 
